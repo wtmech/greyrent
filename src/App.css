@@ -43,3 +43,31 @@
   font-size: 20px;
   font-weight: 400;
 }
+
+.occupants-container {
+  width: 80%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.occupant-container {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border: 1px solid #e1e3e4;
+  border-radius: 3px;
+}
+
+.item-contain {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 12px;
+}
+
+.delete-occupant {
+  color: red;
+  cursor: pointer;
+}
