@@ -139,6 +139,9 @@ class LoanForm extends Component {
             onChange={this.onChange}
             name="bathrooms"
           />
+          <Button variant="raised" style={{background: '#4b8ddf', color: 'white', marginTop: '20px', marginBottom: '10px', width: '60%'}}>
+        Add Rent
+      </Button>
         </FormSections>
 
         <FormSections sectionHeader="Expenses">
