@@ -1,0 +1,45 @@
+.loan-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.input-field {
+  width: 60%;
+  margin-top: 50px;
+}
+
+.form-container {
+  width: 50%;
+  height: 100%;
+  background: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 3px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-title {
+  font-weight: 300;
+  font-size: 30px;
+  color: #60898a;
+}
+
+.form-section {
+  width: 90%;
+  display: flex;
+}
+
+.section-container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+}
+
+.section-header {
+  font-size: 20px;
+  font-weight: 400;
+}
