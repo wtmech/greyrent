@@ -40,10 +40,10 @@ class LoanForm extends Component {
   // onSubmit(event) {
   //   event.preventDefault();
   //   const data = {
-  //     income: this.state.income,
-  //     expenses: this.state.expenses,
-  //     rate:  this.state.rate,
-  //     noi:  this.state.noi,
+  //     income: ,
+  //     expenses: ,
+  //     rate:  ,
+  //     noi:  ,
   //     address: {
   //       street:  this.state.street,
   //       city:  this.state.city,
