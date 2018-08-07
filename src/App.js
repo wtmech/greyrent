@@ -15,7 +15,7 @@ class App extends Component {
         county: '',
         zip: ''
       },
-      annualTotal: '',
+      income: 0,
       expenses: {
         marketing: '',
         taxes: '',
@@ -26,7 +26,7 @@ class App extends Component {
         utilities: '',
         management: ''
       },
-      expensesTotal: '',
+      expensesTotal: 0,
       occupants: [],
       rent: {
         monthlyRent: '',
@@ -34,17 +34,22 @@ class App extends Component {
         bedrooms: '',
         bathrooms: '',
       },
-      terms: []
+      purchase: '',
+      capRate: '',
+      terms: [],
+      loading: false
     }
 
     this.onAddressChange = this.onAddressChange.bind(this);
     this.onRentChange = this.onRentChange.bind(this);
     this.onExpenseChange = this.onExpenseChange.bind(this);
-    this.getOccupants = this.getOccupants.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
     this.addOccupant = this.addOccupant.bind(this);
     this.removeOccupant = this.removeOccupant.bind(this);
     this.addExpenses = this.addExpenses.bind(this);
-    // this.onSubmit = this.onSubmit.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    this.calculateIncome = this.calculateIncome.bind(this);
+    
 
   }
 
@@ -66,9 +71,15 @@ class App extends Component {
     })
   }
 
+  onInputChange(e) {
+    this.setState({
+      [e.target.name]: parseInt(e.target.value, 10)
+    })
+  }
+
   addOccupant() {
     let data = {
-      monthlyRent: this.state.rent.monthlyRent,
+      monthlyRent: parseInt(this.state.rent.monthlyRent, 10),
       unit: this.state.rent.unit,
       bedrooms: this.state.rent.bedrooms,
       bathrooms: this.state.rent.bathrooms
@@ -80,21 +91,13 @@ class App extends Component {
         unit: '',
         bedrooms: '',
         bathrooms: '',
-      }
+      },
     })
   }
 
   removeOccupant(unit) {
     this.setState({
       occupants: this.state.occupants.filter((occupant) => occupant.unit !== unit)
-    });
-  }
-
-  getOccupants() {
-    console.log(1);
-    this.state.occupants.map((occupant) => {
-      console.log(occupant)
-      return <div>{occupant.monthlyRent}</div>;
     })
   }
 
@@ -108,31 +111,47 @@ class App extends Component {
     })
   }
 
-  // onSubmit(event) {
-  //   event.preventDefault();
-  //   const data = {
-  //     income: ,
-  //     expenses: ,
-  //     rate:  ,
-  //     noi:  ,
-  //     address: {
-  //       street:  this.state.street,
-  //       city:  this.state.city,
-  //       state:  this.state.state,
-  //       county:  this.state.county, 
-  //       zip: this.state.zip
-  //     }
-  //   }
+  calculateIncome() {
+    this.state.occupants.map(occupant => {
+      return occupant.monthlyRent
+    }).reduce((x, y) => {
+      return this.setState({
+        income: (x + y) * 12
+      })
+    })
+  }
+
+  onSubmit() {
+    this.calculateIncome();
+    this.addExpenses();
+
+    this.setState({
+      loading: true
+    })
     
-  //   fetch("https://script.google.com/macros/s/AKfycbwPGz6uQQS9IW33ASPYlcWaEtRMD8eDAK1ONg7lT2dREXpaSUYh/exec", {
-  //     method: 'POST',
-  //     body: data,
-  //   }).then((res, req)=>{
-  //     return res.json();
-  //   }).then((data)=>{
-  //     this.setState({terms: data.terms})
-  //   })
-  // }
+    const data = {
+      income: this.state.income,
+      expenses: this.state.expensesTotal,
+      rate:  this.state.income / this.state.purchase,
+      noi: this.state.income - this.state.expensesTotal,
+      address: {
+        street:  this.state.street,
+        city:  this.state.city,
+        state:  this.state.state,
+        county:  this.state.county, 
+        zip: this.state.zip
+      }
+    }
+    
+    fetch("https://script.google.com/macros/s/AKfycbwPGz6uQQS9IW33ASPYlcWaEtRMD8eDAK1ONg7lT2dREXpaSUYh/exec", {
+      method: 'POST',
+      body: data,
+    }).then((res, req) =>{
+      return res.json();
+    }).then((data) => {
+      this.setState({terms: data.terms, loading: false})
+    })
+  }
 
   render() {
     return (
@@ -146,8 +165,10 @@ class App extends Component {
         removeOccupant={this.removeOccupant}
         addExpenses={this.addExpenses}
         onExpenseChange={this.onExpenseChange}
+        onInputChange={this.onInputChange}
+        onSubmit={this.onSubmit}
       />
-      <RateContainer />
+      <RateContainer terms={this.state.terms} loading={this.state.loading}/>
       </Fragment>
     );
   }

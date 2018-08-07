@@ -87,7 +87,7 @@ const LoanForm = (props) => {
           <Button
             onClick={() => props.addOccupant()}
             variant="raised"
-            style={{background: '#4b8ddf', color: 'white', marginTop: '20px', marginBottom: '10px', width: '60%'}}
+            style={{background: '#3c6d9d', color: 'white', marginTop: '20px', marginBottom: '10px', width: '60%'}}
           >
             Add Rent
           </Button>
@@ -180,21 +180,18 @@ const LoanForm = (props) => {
           value={props.info.expenses.management}
           onChange={props.onExpenseChange}
         />
-
-        <div onClick={() => props.addExpenses()}>clc</div>
-
-        {props.expenseTotal}
       </FormSections>
 
-      <FormSections sectionHeader="Capitalization Rate">
+      <FormSections sectionHeader="Purchase Price">
       <Input 
         placeholder="Purchase Price"
-        name="purchasePrice"
+        name="purchase"
         type="number"
+        value={props.info.purchase}
+        onChange={props.onInputChange}
       />
     </FormSections>
-      
-      <Button variant="raised" type="submit" style={{background: '#4b8ddf', color: 'white', marginTop: '20px', marginLeft: '10px', marginBottom: '10px'}}>
+      <Button onClick={() => props.onSubmit()} variant="raised" style={{background: '#3c6d9d', color: 'white', marginTop: '20px', marginLeft: '10px', marginBottom: '10px'}}>
         Submit
       </Button>
       </form>    

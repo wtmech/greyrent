@@ -19,6 +19,8 @@ class LoanContainer extends Component {
             removeOccupant={this.props.removeOccupant}
             addExpenses={this.props.addExpenses}
             onExpenseChange={this.props.onExpenseChange}
+            onInputChange={this.props.onInputChange}
+            onSubmit={this.props.onSubmit}
           />
         </FormContainer>
         

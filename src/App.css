@@ -24,7 +24,7 @@
 .app-title {
   font-weight: 300;
   font-size: 30px;
-  color: #60898a;
+  color: #3c6d9d;
 }
 
 .form-section {
@@ -70,4 +70,32 @@
 .delete-occupant {
   color: red;
   cursor: pointer;
+}
+
+.rates-container {
+  margin: 20px auto 0 auto;
+  width: 50%;
+  min-height: 300px;
+}
+
+.rate-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.rate {
+  min-width: 200px;
+  min-height: 200px;
+  color: white;
+  font-weight: 300;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.term-text {
+  font-size: 16px;
+  margin-left: 5px;
 }
