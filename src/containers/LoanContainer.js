@@ -15,7 +15,6 @@ class LoanContainer extends Component {
             onAddressChange={this.props.onAddressChange}
             onRentChange={this.props.onRentChange}
             addOccupant={this.props.addOccupant}
-            getOccupants={this.props.getOccupants}
             removeOccupant={this.props.removeOccupant}
             addExpenses={this.props.addExpenses}
             onExpenseChange={this.props.onExpenseChange}

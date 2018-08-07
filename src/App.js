@@ -161,7 +161,6 @@ class App extends Component {
         onAddressChange={this.onAddressChange}
         onRentChange={this.onRentChange}
         addOccupant={this.addOccupant}
-        getOccupants={this.getOccupants}
         removeOccupant={this.removeOccupant}
         addExpenses={this.addExpenses}
         onExpenseChange={this.onExpenseChange}
