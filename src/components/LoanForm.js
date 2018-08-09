@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import Input from './global/Input';
 import FormSections from './global/formSection/FormSections';
@@ -6,106 +6,47 @@ import FormSections from './global/formSection/FormSections';
 import {Button} from '@material-ui/core';
 
 
-class LoanForm extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      address: {
-        street: '',
-        city: '',
-        state: '',
-        county: '',
-        zip: ''
-      },
-      annualTotal: '',
-      rent: [],
-      terms: []
-    }
-
-    this.onChangeAddress = this.onChangeAddress.bind(this);
-    // this.onSubmit = this.onSubmit.bind(this);
-
-  }
-
-  onChangeAddress(e) {
-    this.setState({
-        address: {...this.state.address, [e.target.name]: e.target.value}
-    })
-  }
-
-  addRent() {
-
-  }
-
-  // onSubmit(event) {
-  //   event.preventDefault();
-  //   const data = {
-  //     income: ,
-  //     expenses: ,
-  //     rate:  ,
-  //     noi:  ,
-  //     address: {
-  //       street:  this.state.street,
-  //       city:  this.state.city,
-  //       state:  this.state.state,
-  //       county:  this.state.county, 
-  //       zip: this.state.zip
-  //     }
-  //   }
-    
-  //   fetch("https://script.google.com/macros/s/AKfycbwPGz6uQQS9IW33ASPYlcWaEtRMD8eDAK1ONg7lT2dREXpaSUYh/exec", {
-  //     method: 'POST',
-  //     body: data,
-  //   }).then((res, req)=>{
-  //     return res.json();
-  //   }).then((data)=>{
-  //     this.setState({terms: data.terms})
-  //   })
-  // }
-
-
-
-  render() {
+const LoanForm = (props) => {
     return (
-      <form onSubmit={this.props.formSubmit}>
-        <div className="app-title">{this.props.title}</div>
+      <form>
+        <div className="app-title">{props.title}</div>
         <FormSections sectionHeader="Address">
           <Input 
             placeholder="Street"
-            value={this.state.address.street}
-            onChange={this.onChangeAddress}
+            value={props.info.address.street}
+            onChange={props.onAddressChange}
             name="street"
             type="text"
           />
 
           <Input 
             placeholder="City"
-            value={this.state.address.city}
-            onChange={this.onChangeAddresss}
+            value={props.info.address.city}
+            onChange={props.onAddressChange}
             name="city"
             type="text"
           />
 
           <Input 
             placeholder="State"
-            value={this.state.address.state}
-            onChange={this.onChangeAddress}
+            value={props.info.address.state}
+            onChange={props.onAddressChange}
             name="state"
             type="text"
           />
 
           <Input 
             placeholder="County"
-            value={this.state.address.county}
-            onChange={this.onChangeAddress}
+            value={props.info.address.county}
+            onChange={props.onAddressChange}
             name="county"
             type="text"
           />
 
           <Input 
             placeholder="Zip Code"
-            value={this.state.address.zip}
-            onChange={this.onChangeAddress}
+            value={props.info.address.zip}
+            onChange={props.onAddressChange}
             name="zip"
             type="text"
           />
@@ -114,107 +55,147 @@ class LoanForm extends Component {
         <FormSections sectionHeader="Rent Roll">
           <Input 
             placeholder="Monthly Rent"
-            value=""
-            onChange={this.onChange}
-            name="monthly rent"
+            value={props.info.rent.monthlyRent}
+            onChange={props.onRentChange}
+            name="monthlyRent"
+            type="number"
           />
 
           <Input 
             placeholder="Unit #"
-            value=""
-            onChange={this.onChange}
+            value={props.info.rent.unit}
+            onChange={props.onRentChange}
             name="unit"
+            type="text"
           />
 
           <Input 
             placeholder="# of Bedrooms"
-            value=""
-            onChange={this.onChange}
+            value={props.info.rent.bedrooms}
+            onChange={props.onRentChange}
             name="bedrooms"
+            type="number"
           />
 
           <Input 
             placeholder="# of Bathrooms"
-            value=""
-            onChange={this.onChange}
+            value={props.info.rent.bathrooms}
+            onChange={props.onRentChange}
             name="bathrooms"
+            type="number"
           />
-          <Button variant="raised" style={{background: '#4b8ddf', color: 'white', marginTop: '20px', marginBottom: '10px', width: '60%'}}>
-        Add Rent
-      </Button>
+          <Button
+            onClick={() => props.addOccupant()}
+            variant="raised"
+            style={{background: '#3c6d9d', color: 'white', marginTop: '20px', marginBottom: '10px', width: '60%'}}
+          >
+            Add Rent
+          </Button>
+        <div className="occupants-container">
+        {props.info.occupants.map(occupant => 
+          <div key={occupant.unit} className="occupant-container">
+            <div className="item-contain">
+              <div>Unit #</div>
+              <div>{occupant.unit}</div>
+            </div>
+            <div className="item-contain">
+              <div>Monthly Rent</div>
+              <div>{occupant.monthlyRent}</div>
+            </div>
+            <div className="item-contain">
+              <div># of bedrooms</div>
+              <div>{occupant.bedrooms}</div>
+            </div>
+            <div className="item-contain">
+              <div># of bathrooms</div>
+              <div>{occupant.bathrooms}</div>
+            </div>
+            <div className="delete-occupant" onClick={() => props.removeOccupant(occupant.unit)}>x</div>
+          </div>
+          )
+        }
+        </div>
         </FormSections>
-
         <FormSections sectionHeader="Expenses">
         <Input 
           placeholder="Marketing"
-          value=""
-          onChange={this.onChange}
-          name=""
+          name="marketing"
+          type="number"
+          value={props.info.expenses.marketing}
+          onChange={props.onExpenseChange}
         />
 
         <Input 
           placeholder="Taxes"
-          value=""
-          onChange={this.onChange}
-          name=""
+          name="taxes"
+          type="number"
+          value={props.info.expenses.taxes}
+          onChange={props.onExpenseChange}
         />
 
         <Input 
           placeholder="Insurance"
-          value=""
-          onChange={this.onChange}
-          name=""
+          name="insurance"
+          type="number"
+          value={props.info.expenses.insurance}
+          onChange={props.onExpenseChange}
         />
 
         <Input 
           placeholder="Repairs"
-          value=""
-          onChange={this.onChange}
-          name=""
+          name="repairs"
+          type="number"
+          value={props.info.expenses.repairs}
+          onChange={props.onExpenseChange}
         />
 
         <Input 
           placeholder="Administarion"
-          value=""
-          onChange={this.onChange}
-          name=""
+          name="administration"
+          type="number"
+          value={props.info.expenses.administration}
+          onChange={props.onExpenseChange}
         />
 
         <Input 
           placeholder="Payroll"
-          value=""
-          onChange={this.onChange}
-          name=""
+          name="payroll"
+          type="number"
+          value={props.info.expenses.payroll}
+          onChange={props.onExpenseChange}        
         />
 
         <Input 
           placeholder="Utilities"
-          value=""
-          onChange={this.onChange}
-          name=""
-        />
-
-        <Input 
-          placeholder="Administarion"
-          value=""
-          onChange={this.onChange}
-          name=""
+          name="utilities"
+          type="number"
+          value={props.info.expenses.utilities}
+          onChange={props.onExpenseChange}
         />
 
         <Input 
           placeholder="Management"
-          value=""
-          onChange={this.onChange}
-          name=""
+          name="management"
+          type="number"
+          value={props.info.expenses.management}
+          onChange={props.onExpenseChange}
         />
       </FormSections>
-      
-      <Button variant="raised" type="submit" style={{background: '#4b8ddf', color: 'white', marginTop: '20px', marginLeft: '10px', marginBottom: '10px'}}>
+
+      <FormSections sectionHeader="Purchase Price">
+      <Input 
+        placeholder="Purchase Price"
+        name="purchase"
+        type="number"
+        value={props.info.purchase}
+        onChange={props.onInputChange}
+      />
+    </FormSections>
+      <Button onClick={() => props.onSubmit()} variant="raised" style={{background: '#3c6d9d', color: 'white', marginTop: '20px', marginLeft: '10px', marginBottom: '10px'}}>
         Submit
       </Button>
       </form>    
     );
   }
-}
 
 export default LoanForm;
